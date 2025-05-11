@@ -1,0 +1,139 @@
+/* General body styling */
+
+html, body, #root {
+  height: 100%;
+  overflow: auto;
+}
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1e1e2f; /* Softer text color */
+  background-color: #a8dadc; /* Softer dark background */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Headings */
+h1 {
+  font-style: italic;
+  color: #2e3440;   /* Softer teal color for headings */
+  text-align: center;
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Better distribution for brand and links */
+  background-color: #1e1e2f; /* Richer, elegant dark tone */
+  color: #ffffff;
+  padding: 12px 24px;
+  margin: 16px auto;
+  width: 90%;
+  max-width: 1080px;
+  border-radius: 16px;
+  font-size: 1rem;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Slightly deeper for a sleek effect */
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35); /* Interactive feedback */
+  background-color: #252538; /* Subtle hover change */
+}
+
+.navbar a {
+  margin-right: 16px;
+  color: #81a1c1; /* Softer blue for links */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #88c0d0; /* Highlight color on hover */
+}
+
+#logout {
+  margin-left: auto;
+}
+
+
+#success {
+  color: #a3be8c; /* Softer green for success messages */
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
+/* Buttons */
+button {
+  border-radius: 8px;
+  border: 1px solid #3b4252; /* Subtle border */
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #3b4252; /* Softer dark button */
+  color: #e0e0e0; /* Softer text color */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4c566a; /* Slightly lighter on hover */
+  border-color: #81a1c1; /* Highlight border on hover */
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto #81a1c1; /* Highlight focus */
+}
+
+/* Links */
+a {
+  font-weight: 500;
+  color: #81a1c1;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #88c0d0;
+}
+
+/* Media query for light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    color: #2e3440;
+    background-color: #eceff4;
+  }
+
+  .navbar {
+    background-color: #d8dee9;
+    color: #2e3440;
+  }
+
+  .navbar a {
+    color: #5e81ac;
+  }
+
+  .navbar a:hover {
+    color: #81a1c1;
+  }
+
+  button {
+    background-color: #d8dee9;
+    color: #2e3440;
+    border-color: #5e81ac;
+  }
+
+  button:hover {
+    background-color: #e5e9f0;
+    border-color: #81a1c1;
+  }
+}
