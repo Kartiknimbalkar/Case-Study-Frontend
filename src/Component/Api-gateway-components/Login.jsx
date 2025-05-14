@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -29,9 +31,11 @@ const Login = () => {
       console.log("Decoded Role:", role);
 
       if (response.status === 200 && role === "ADMIN") {
-        navigate("/admin-dashboard");
+        toast.success("Login successful");
+        setTimeout(() => navigate("/admin-dashboard"), 2000);
       } else if (response.status === 200 && role === "DOCTOR") {
-        navigate("/doctor-dashboard");
+        toast.success("Login successful");
+        setTimeout(() => navigate("/doctor-dashboard"), 2000);
       } else {
         setErrorMessage("Invalid credentials or insufficient permissions.");
       }
@@ -44,6 +48,8 @@ const Login = () => {
 
   return (
     <div style={styles.container}>
+              <ToastContainer position='top-right' autoClose={3000}/>
+
       <form onSubmit={handleSubmit} style={styles.form}>
         <h1 style={styles.title}>Login</h1>
 
@@ -60,6 +66,7 @@ const Login = () => {
           <input type="reset" value="Reset" style={styles.resetButton} />
         </div>
 
+
         <p style={styles.signupPrompt}>
           Don't have an account? <span onClick={() => navigate('/signup')} style={styles.signupLink}>Sign Up</span>
         </p>
@@ -74,7 +81,7 @@ const styles = {
     height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
-    background: '#f5f6fa',
+    background: 'color-gradient(135deg , #00a8ff, #9c88ff)',
   },
   form: {
     background: '#fff',

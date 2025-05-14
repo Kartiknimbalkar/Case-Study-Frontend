@@ -13,10 +13,11 @@ const DrugsBar = () => {
     <>
     <nav className='navbar'>
         <NavLink to="/admin-dashboard" style={styling}>Home</NavLink>
+        <NavLink to="/drug-inventory/drugs" style={styling}>List Drugs</NavLink>
         <NavLink to="/drug-inventory/drug-add" style={styling}>Add Drug</NavLink>
+        <NavLink to="/drug-inventory/drugs/drug-update" style={styling}>Update Drug</NavLink>
         <NavLink to="/drug-inventory/drug-delete" style={styling}>Delete Drug</NavLink>
         <NavLink to="/drug-inventory/drug-id" style={styling}>Get Drug by Id</NavLink>
-        <NavLink to="/drug-inventory/drugs" style={styling}>List Drugs</NavLink>
     </nav>
     <hr/>
 

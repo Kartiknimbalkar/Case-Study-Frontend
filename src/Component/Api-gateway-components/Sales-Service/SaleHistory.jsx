@@ -42,12 +42,13 @@ const SaleHistory = () => {
           <button onClick={handleSubmit}>Get Sales</button>
       </div>
       <div>
+        { sales.length > 0 &&
         <table border='1' style={{ 
-          width: '100%', 
+          width: '90%', 
           borderCollapse: 'collapse', 
           marginTop: '20px', 
-          marginLeft: '100px', 
-          marginRight: '100px', 
+          marginLeft: '60px', 
+          marginRight: '20px', 
           marginBottom: '20px', 
           textAlign: 'left', 
           fontSize: '1rem', 
@@ -86,6 +87,7 @@ const SaleHistory = () => {
             ))}
           </tbody>
         </table>
+}
       </div>
     </>
   )

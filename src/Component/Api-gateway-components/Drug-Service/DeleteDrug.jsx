@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './DeleteDrug.css'; // import CSS
 
 const DeleteDrug = () => {
 
@@ -12,7 +13,8 @@ const DeleteDrug = () => {
         setId(e.target.value);
     };
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault();
         setDeleteId(id);   
     };
 
@@ -44,12 +46,15 @@ const DeleteDrug = () => {
     deleteDrug();
 }, [deletedId, navigate]);
 
-  return (
-    <div>
+  return (<div>
+    <h1 style={{textAlign: 'center', color: '#343a40'}}>Delete Drug</h1>
+    <form style={{padding: '20px', margin: 'auto', width: '300px', textAlign: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
       <label>Enter Drug Batch ID to be Deleted</label><br/>
       <input type='text' value={id} onChange={handleInput} placeholder='Enter Batch ID'></input>
       <br/><br/>
-      <button onClick={handleDelete}>Delete</button>
+      <button type='submit' onClick={handleDelete}>Delete</button>
+    </form>
+
     </div>
   )
 }

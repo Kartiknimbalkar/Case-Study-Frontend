@@ -55,7 +55,7 @@ const SuppliersList = () => {
                     <td>{supplier.supplierEmail}</td>
                     <td>{supplier.batchId}</td>
                     <td>{supplier.totalQuantitySupplied}</td>
-                    <td>{supplier.lastRestockDate}</td>
+                    <td>{(supplier.lastRestockDate) !== null ? new Date(supplier.lastRestockDate).toLocaleDateString() : null}</td>
                 </tr>
             ))}
         </tbody>

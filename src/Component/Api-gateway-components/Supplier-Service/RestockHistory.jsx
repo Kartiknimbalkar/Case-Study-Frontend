@@ -52,7 +52,7 @@ const RestockHistory = () => {
                         <tr key={index}>
                             <td>{history.supplierName}</td>
                             <td>{history.quantity}</td>
-                            <td>{history.restockDate}</td>
+                            <td>{new Date(history.restockDate).toLocaleString()}</td>
                         </tr>
                     ))}
                 </tbody>

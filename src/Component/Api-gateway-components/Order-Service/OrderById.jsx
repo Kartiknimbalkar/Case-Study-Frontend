@@ -31,7 +31,8 @@ const OrderById = () => {
     }
 
   return (
-    <div>
+    <div style={{ marginTop: '20px', marginBottom: '20px', marginLeft: '100px', marginRight: '100px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <h1 style={{ color: 'brown' }}>Get Order By ID</h1>
       <label htmlFor="orderId">Enter Order ID:</label><br/>
       <input type="number" onChange={(e) => setOrderId(e.target.value)} id="orderId" name="orderId" placeholder='Enter Order ID' /><br/><br/>
       <button onClick={handleSubmit}>Get Order</button><br/><br/>

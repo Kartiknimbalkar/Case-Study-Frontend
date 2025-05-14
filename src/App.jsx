@@ -38,7 +38,8 @@ import SalesBar from './Component/Api-gateway-components/NavBars/SalesBar'
 import Failure from './Component/Api-gateway-components/Failure'
 import SaleHistory from './Component/Api-gateway-components/Sales-Service/SaleHistory'
 import SaleReport from './Component/Api-gateway-components/Sales-Service/SaleReport'
-
+import UpdateDrug from './Component/Api-gateway-components/Drug-Service/UpdateDrug'
+import DrugListDC from './Component/Api-gateway-components/Drug-Service/DrugListDC'
 const App = () => {
   return (
     <>
@@ -54,17 +55,18 @@ const App = () => {
 
         <Route path='doctor-dashboard' element={<DoctorDashboard />}>
           {/* <Route index element={<Drugs />} /> */}
-          <Route path='drugs' element={<Drugs />} />
+          <Route path='drug-list-dc' element={<DrugListDC />} />
           <Route path='orderpay' element={<OrderAndPay />} />
           <Route path='drug-id' element={<DrugsById />} />
         </Route>
 
         <Route path='drug-inventory' element={<DrugsBar />}>
-          <Route index element={<Drugs />} />
+          <Route index element={<h1>Welcome to Drug Inventory</h1> } />
           <Route path='drugs' element={<Drugs />} />
           <Route path='drug-id' element={<DrugsById />} />
           <Route path='drug-delete' element={<DeleteDrug />} />
           <Route path='drug-add' element={<AddDrug />} />
+          <Route path='drugs/drug-update' element={<UpdateDrug />} />
         </Route>
 
         <Route path='supplier-inventory' element={<SupplierBar />}>

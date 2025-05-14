@@ -70,9 +70,9 @@ const OrderList = () => {
                 <td>{order.quantity}</td>
                 <td>₹ {order.totalPrice}</td>
                 {/* <td>₹ {order.paidAmount}</td> */}
-                <td>{order.orderDate}</td>
+                <td>{new Date(order.orderDate).toLocaleString()}</td>
                 <td>{order.status}</td>
-                <td>{order.pickupDate}</td>
+                <td>{(order.pickupDate) !== null ? new Date(order.pickupDate).toLocaleString() : null}</td>
               </tr>
             );
           })}

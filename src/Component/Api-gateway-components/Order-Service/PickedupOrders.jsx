@@ -26,7 +26,7 @@ const PickedupOrders = () => {
     }, []);
   return (
     <div>
-      <table border="1" cellPadding="5" cellSpacing="0" style={{ width: '98%', margin: 'auto', textAlign: 'center' }}>
+      <table border="1" cellPadding="5" cellSpacing="0" style={{ width: '98%', marginBottom: '20px', marginTop: '20px', marginLeft: '20px', marginRight:'20px', textAlign: 'center', fontSize: '1rem', fontFamily: 'Arial, sans-serif', backgroundColor: '#f9f9f9', color: '#333', padding: '10px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <thead>
           <tr>
             <th>Order Id</th>
@@ -55,8 +55,8 @@ const PickedupOrders = () => {
                 <td>{order.quantity}</td>
                 <td>₹ {order.totalPrice}</td>
                 <td>₹ {order.paidAmount}</td>
-                <td>{order.orderDate}</td>
-                <td>{order.pickupDate}</td>
+                <td>{new Date (order.orderDate).toLocaleString()}</td>
+                <td>{new Date(order.pickupDate).toLocaleString()}</td>
               </tr>
             )
           })}

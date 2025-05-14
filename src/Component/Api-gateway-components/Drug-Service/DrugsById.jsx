@@ -50,17 +50,20 @@ const DrugsById = ({refresh}) => {
 }, [searchId, refresh]);
 
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '20px',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
       <h1>Find Drugs By ID</h1>
-      <br/><br/>
       {/* <label>Enter Drug Batch ID</label><br/> */}
-      <input type='text' value={id} onChange={handleChange} placeholder='Enter Batch ID'></input>
-      <br/><br/>
-      <button onClick={handleSearch}>Search</button>
-      <br/><br/>
+      <input style={{padding: '10px'}} type='text' value={id} onChange={handleChange} placeholder='Enter Batch ID'></input>
+      <button style={{marginTop: '10px', padding: '10px', cursor: 'pointer'}} onClick={handleSearch}>Search</button>
      {
       hasSearched ? ( data ? (
-        <div>
+        <div style={{marginBottom: '12px', textAlign: 'left'}}>
           <h2>Drug Details</h2>
           <p><strong>BATCH ID: </strong> {data.batchId} </p>
           <p><strong>Drug Name: </strong> {data.name} </p>

@@ -436,8 +436,8 @@ if (!window.Razorpay) {
         {refresh && <p>Order placed and payment initiated!</p>}
       </form>
       <br/><br/>
-    <h2 style={{textAlign: 'center'}}>Drugs List</h2>
-    <Drugs refresh={refresh} />
+    {/* <h2 style={{textAlign: 'center'}}>Drugs List</h2> */}
+    {/* <Drugs refresh={refresh} /> */}
 
       {/* <h2>List of Orders</h2> */}
       {/* <ListOrders refresh={refresh} /> */}

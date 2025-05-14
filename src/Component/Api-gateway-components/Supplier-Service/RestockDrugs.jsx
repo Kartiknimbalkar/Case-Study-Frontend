@@ -39,20 +39,20 @@ const RestockDrugs = () => {
     }
 
   return (
-    <div>
-      <form>
+    <div style={{marginTop: '60px'}}>
+      <form style={{padding: '20px', margin: 'auto', width: '300px', textAlign: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
         <h1>Restock Drugs</h1>
         <div>
           <label htmlFor="batchId">Batch ID:</label><br/>
-          <input type="text" onChange={handleInput} id="batchId" name="batchId" required /><br/><br/>
+          <input type="text" onChange={handleInput} id="batchId" name="batchId" placeholder='Enter Batch ID' required /><br/><br/>
         </div>
         <div>
           <label htmlFor="quantity">Quantity:</label><br/> 
-          <input type="number" onChange={handleInput} id="quantity" name="quantity" required /><br/><br/>
+          <input type="number" onChange={handleInput} id="quantity" name="quantity" placeholder='Enter Quantity' required /><br/><br/>
         </div>
         <div>
           <label htmlFor="expiryDate">Expiry Date:</label><br/> 
-          <input type="text" onChange={handleInput} id="expiryDate" name="expiryDate" required /><br/><br/>
+          <input type="text" onChange={handleInput} id="expiryDate" name="expiryDate" placeholder='Enter Expiry Date' required /><br/><br/>
         </div>
         <button type="submit" onClick={restock}>Restock</button><br/><br/>
         <button type="reset">Reset</button><br/><br/>
