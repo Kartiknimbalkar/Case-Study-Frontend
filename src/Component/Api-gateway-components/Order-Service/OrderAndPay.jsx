@@ -452,9 +452,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DrugListDC from '../Drug-Service/DrugListDC' // TODO: adjust this import to the correct path or remove if unused
-const apiKey = import.meta.env.VITE_API_KEY;
-
+import DrugListDC from '../Drug-Service/DrugListDC'
 
 const PlaceOrder = () => {
   const [formData, setFormData] = useState({
@@ -502,7 +500,7 @@ const PlaceOrder = () => {
 
     try {
       // Fetch price & total
-      const { data: info } = await axios.get(
+      const response = await axios.get(
         'http://localhost:9090/order-service/orders/price-stock',
         { params: { batch_id: formData.batch_id, quantity: formData.quantity },
         headers: {
@@ -510,14 +508,15 @@ const PlaceOrder = () => {
     }
       }
       );
-      const total = info.totalPrice;
+      const total = response.data.totalPrice;
       setStatusMessage(`Total amount: ₹${total}`);
 
       // 1) Create Razorpay-order stub
+      const refId = Date.now().toString()
       setStatusMessage('Creating payment order...');
       const { data: paymentData } = await axios.post(
         'http://localhost:8087/payment/createOrder',
-        { total, clientOrderRef: Date.now().toString() }
+        { total, clientOrderRef: refId }
       );
 
       // 2) Configure Razorpay
@@ -527,7 +526,7 @@ const PlaceOrder = () => {
         currency: 'INR',
         order_id: paymentData.razorpayOrderId,
         name: 'Your Pharmacy',
-        description: `Order for ${formData.batch_id}`,
+        description: `Order for ${formData.batch_id}, ref: ${refId}`,
         handler: async response => {
           setStatusMessage('Verifying payment...');
           try {
@@ -550,6 +549,13 @@ const PlaceOrder = () => {
                 totalPrice: paymentData.total
               },
               { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+            );
+
+            await axios.put("http://localhost:8087/payment/update",
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                order_id: savedOrder.id
+              }
             );
 
             navigate('/success', {
@@ -581,6 +587,7 @@ const PlaceOrder = () => {
       alert('Error in payment flow. Please try again.');
     } finally {
       setLoading(false);
+      setStatusMessage('');
     }
   };
 
@@ -615,7 +622,7 @@ const PlaceOrder = () => {
       </form>
 
       <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Drugs List</h2>
-       <DrugListDC />   {/* Temporarily commented out - please provide correct path or remove */}
+       <DrugListDC />
     </>
   );
 };
