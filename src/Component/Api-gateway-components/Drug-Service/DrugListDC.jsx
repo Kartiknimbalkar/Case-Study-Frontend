@@ -95,6 +95,7 @@ const DrugListDC = ({ refresh }) => {
               <p>
                 <strong>Batch ID:</strong> {drug.batchId}
               </p>
+              <p><strong>Quantity:</strong>{drug.quantity}</p>
               <p>
                 <strong>Expire Date:</strong>{' '}
                 {drug.expiryDate
