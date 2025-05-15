@@ -5,12 +5,8 @@ import './DoctorDashboard.css'; // import CSS
 
 const DoctorDashboard = () => {
   return (
-    <div className="dashboard-container">
+    <div>
       <DoctorNavBar />
-      <div className="header">
-        <h1>Doctor Dashboard</h1>
-        <h2>Welcome to Pharmacy Management System</h2>
-      </div>
       <Outlet />
     </div>
   );

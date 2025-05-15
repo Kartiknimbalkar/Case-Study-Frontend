@@ -40,6 +40,7 @@ import SaleHistory from './Component/Api-gateway-components/Sales-Service/SaleHi
 import SaleReport from './Component/Api-gateway-components/Sales-Service/SaleReport'
 import UpdateDrug from './Component/Api-gateway-components/Drug-Service/UpdateDrug'
 import DrugListDC from './Component/Api-gateway-components/Drug-Service/DrugListDC'
+import OrderListDC from './Component/Api-gateway-components/Order-Service/OrderListDC'
 const App = () => {
   return (
     <>
@@ -54,8 +55,12 @@ const App = () => {
         <Route path='admin-dashboard' element={<AdminDashboard />} />
 
         <Route path='doctor-dashboard' element={<DoctorDashboard />}>
-          {/* <Route index element={<Drugs />} /> */}
+          <Route index element={<div>
+                  <h1>Doctor Dashboard</h1>
+                  <h2 style={{textAlign: 'center'}}>Welcome to Pharmacy Management System</h2>
+                  </div>} />
           <Route path='drug-list-dc' element={<DrugListDC />} />
+          <Route path='order-list-dc' element={<OrderListDC />} />
           <Route path='orderpay' element={<OrderAndPay />} />
           <Route path='drug-id' element={<DrugsById />} />
         </Route>
