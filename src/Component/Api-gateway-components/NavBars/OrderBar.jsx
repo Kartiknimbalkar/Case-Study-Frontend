@@ -18,6 +18,7 @@ const OrderBar = () => {
         <Link to="/order-inventory/verify-order">Verify Order</Link>
         <Link to="/order-inventory/pickup-order">PickUp Order</Link>
         <Link to="/order-inventory/pickedup-orders">Pickedup Orders</Link>
+        <Link to="/order-inventory/verified-orders">Verified Orders</Link>
         <Link to="/order-inventory/order-by-id">Order By ID</Link>
       </nav>
 

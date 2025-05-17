@@ -75,6 +75,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: '-60px',
     // background: 'linear-gradient(135deg, #e0eafc, #cfdef3)',
   },
   form: {

@@ -1,0 +1,67 @@
+/* RestockDrugs.css */
+
+.restock-form-container {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+.restock-form {
+  padding: 20px;
+  width: 320px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.restock-form h1 {
+  margin-bottom: 20px;
+}
+
+.restock-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.restock-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.restock-form button {
+  padding: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.restock-form button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+}
+
+.restock-form button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+.restock-form button[type="reset"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.restock-form button[type="reset"]:hover {
+  background-color: #d32f2f;
+}

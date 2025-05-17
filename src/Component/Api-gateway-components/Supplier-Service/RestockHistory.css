@@ -1,0 +1,54 @@
+/* RestockHistory.css */
+
+.restock-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  font-family: Arial, sans-serif;
+}
+
+.restock-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.restock-input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.restock-button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #2d89ef;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.restock-button:hover {
+  background-color: #1b6ac9;
+}
+
+.restock-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.restock-table th,
+.restock-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}

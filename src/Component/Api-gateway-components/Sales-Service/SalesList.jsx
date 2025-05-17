@@ -7,12 +7,6 @@ const SalesReport = ({refersh}) => {
     const [sales, setSales] = React.useState([]);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     axios.get("http://localhost:9090/sales-service/sales/getAll")
-    //         .then(da => setSales(da.data))
-    //         .catch(err => console.log(err));
-    // }, []);
-
     useEffect(() => {
         const fetchSales = async () => {
             const token = localStorage.getItem("token");
@@ -37,46 +31,115 @@ const SalesReport = ({refersh}) => {
     let totalSales = sales.length;
     const totalSalesAmount = sales.reduce((sum, sale) => sum + sale.paidAmount, 0);
 
-  return (
-    <div>
-           {/* <li key={index}>{sale.doctorName} || {sale.id} || {sale.batchId} || {sale.quantity} || ₹{sale.totalPrice} || {sale.saleDate}</li> */}
+    const containerStyle = {
+  maxWidth: '900px',
+  margin: '40px auto',
+  padding: '30px',
+  borderRadius: '16px',
+  background: 'rgba(255, 255, 255, 0.2)',
+  backdropFilter: 'blur(15px)',
+  WebkitBackdropFilter: 'blur(15px)',
+  boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)',
+  color: '#222',
+  fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+};
 
-           <div style={{ marginBottom: '1rem', textAlign: 'center', fontFamily: 'Arial, sans-serif', color: '#333', fontSize: '1.1rem', fontWeight: 'bold', marginTop: '20px', padding: '20px' }}>
-            <h1 style={{ marginBottom: '0.5rem' }}>Sales Report</h1>
-            <p><strong>Total Sales:</strong> {totalSales}</p>
-            <p><strong>Total Sales Amount:</strong> ₹{totalSalesAmount}</p>
-          </div>
+const headerStyle = {
+  textAlign: 'center',
+  marginBottom: '20px',
+  color: '#222',
+};
 
-          <table border="1" cellPadding="5" cellSpacing="0" style={{width: '100%', margin: 'auto', textAlign: 'center', marginBottom: '30px', borderRadius: '8px', backgroundColor: '#f9f9f9', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', borderCollapse: 'collapse', fontFamily: 'Arial, sans-serif', color: '#333', fontSize: '1rem', fontWeight: 'bold', padding: '10px', marginTop: '20px', border: '1px solid #ccc', borderSpacing: '0'}}>
-            <thead>
-              <tr>
-                <th>Doctor Name</th>
-                <th>Batch Id</th>
-                <th>Order Id</th>
-                <th>Quantity</th>
-                <th>Paid Amount</th>
-                {/* <th>Balance</th> */}
-                <th>Sale Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sales.map((sale, index) => {
-                return(
-                  <tr key={index}>
-                    <td>{sale.doctorName}</td>
-                    <td>{sale.batchId}</td>
-                    <td>{sale.orderId}</td>
-                    <td>{sale.quantity}</td>
-                    <td>₹{sale.paidAmount}</td>
-                    {/* <td>₹{sale.balance}</td> */}
-                    <td>{sale.saleDate}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+const summaryStyle = {
+  display: 'flex',
+  justifyContent: 'space-around',
+  fontWeight: '700',
+  fontSize: '1.25rem',
+  marginBottom: '30px',
+};
+
+const tableStyle = {
+  width: '100%',
+  borderCollapse: 'separate',
+  borderSpacing: '0 12px',
+  fontSize: '1rem',
+  color: '#333',
+};
+
+const thStyle = {
+  backgroundColor: '#00c8b3',
+  color: 'white',
+  padding: '12px',
+  borderRadius: '12px 12px 0 0',
+  fontWeight: '700',
+};
+
+const tdStyle = {
+  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  padding: '12px',
+  textAlign: 'center',
+  borderBottom: 'none',
+  fontWeight: '600',
+};
+
+const trHover = {
+  cursor: 'pointer',
+  transition: 'background-color 0.3s ease',
+};
+
+const onRowHover = (e) => {
+  e.currentTarget.style.backgroundColor = '#d0f0f9';
+};
+
+const onRowLeave = (e) => {
+  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+};
+
+
+ return (
+  <div style={containerStyle}>
+    <div style={headerStyle}>
+      <h1>Sales Report</h1>
     </div>
-  )
+    <div style={summaryStyle}>
+      <div><strong>Total Sales:</strong> {totalSales}</div>
+      <div><strong>Total Sales Amount:</strong> ₹{totalSalesAmount.toFixed(2)}</div>
+    </div>
+
+    <table style={tableStyle}>
+      <thead>
+        <tr>
+          <th style={thStyle}>Sale ID</th>
+          <th style={thStyle}>Doctor Name</th>
+          <th style={thStyle}>Batch Id</th>
+          <th style={thStyle}>Order Id</th>
+          <th style={thStyle}>Quantity</th>
+          <th style={thStyle}>Paid Amount</th>
+          <th style={thStyle}>Sale Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sales.map((sale, index) => (
+          <tr
+            key={index}
+            style={{ ...tdStyle, ...trHover }}
+            onMouseEnter={onRowHover}
+            onMouseLeave={onRowLeave}
+          >
+            <td style={{ ...tdStyle, fontWeight: 'normal' }}>{sale.id}</td>
+            <td style={{ ...tdStyle, fontWeight: 'normal' }}>{sale.doctorName}</td>
+            <td style={{ ...tdStyle, fontWeight: 'normal' }}>{sale.batchId}</td>
+            <td style={{ ...tdStyle, fontWeight: 'normal' }}>{sale.orderId}</td>
+            <td style={{ ...tdStyle, fontWeight: 'normal' }}>{sale.quantity}</td>
+            <td style={{ ...tdStyle, fontWeight: 'bold', color: '#00796b' }}>₹{sale.paidAmount.toFixed(2)}</td>
+            <td style={{ ...tdStyle, fontWeight: 'normal' }}>{new Date(sale.saleDate).toLocaleDateString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
+
 }
 
 export default SalesReport

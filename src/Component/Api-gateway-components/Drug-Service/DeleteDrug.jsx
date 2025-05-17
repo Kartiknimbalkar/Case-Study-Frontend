@@ -1,62 +1,84 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './DeleteDrug.css'; // import CSS
+import './DeleteDrug.css';
 
 const DeleteDrug = () => {
+  const [id, setId] = useState('');
+  const [deletedId, setDeletedId] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const [id, setId] = useState('');
-    const [deletedId, setDeleteId] = useState('');
-    const navigate = useNavigate();
+  const handleInput = (e) => {
+    setId(e.target.value.trim());
+    setError('');
+  };
 
-    const handleInput = (e) => {
-        setId(e.target.value);
-    };
+  const handleDelete = (e) => {
+    e.preventDefault();
 
-    const handleDelete = (e) => {
-        e.preventDefault();
-        setDeleteId(id);   
-    };
-
-    useEffect(() => {
-        if (!deletedId) return;
-        const deleteDrug = async () => {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                console.warn("No token—redirecting to login")
-                navigate("/login")
-                return
-            }
-            try {
-            const respone = await axios.delete(`http://localhost:9090/drug-service/drugs/delete/${deletedId}`, {
-                headers: {Authorization: `Bearer ${token}`}
-            });
-            console.log(respone.data);
-            alert(`Drug Deleted Successfully ${respone.data}`);
-            navigate("/drug-inventory/drugs");
-            setId('');
-            setDeleteId('');
-        }
-        catch (error) {
-            console.error("Error deleting drug:", error);
-            // alert("Error deleting drug:", error);
-        }
-
+    if (!id) {
+      setError("Please enter a valid Batch ID.");
+      return;
     }
+    setDeletedId(id);
+  };
+
+  useEffect(() => {
+    if (!deletedId) return;
+
+    const deleteDrug = async () => {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Session expired. Please login again.");
+        navigate("/login");
+        return;
+      }
+      try {
+        const response = await axios.delete(
+          `http://localhost:9090/drug-service/drugs/delete/${deletedId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        alert(`Drug deleted successfully: ${response.data}`);
+        setId('');
+        setDeletedId('');
+        navigate("/drug-inventory/drugs");
+      } catch (error) {
+        console.error("Error deleting drug:", error);
+        setError(
+          error.response?.data?.message || "Failed to delete drug. Please try again."
+        );
+        setDeletedId('');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     deleteDrug();
-}, [deletedId, navigate]);
+  }, [deletedId, navigate]);
 
-  return (<div>
-    <h1 style={{textAlign: 'center', color: '#343a40'}}>Delete Drug</h1>
-    <form style={{padding: '20px', margin: 'auto', width: '300px', textAlign: 'center', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}>
-      <label>Enter Drug Batch ID to be Deleted</label><br/>
-      <input type='text' value={id} onChange={handleInput} placeholder='Enter Batch ID'></input>
-      <br/><br/>
-      <button type='submit' onClick={handleDelete}>Delete</button>
-    </form>
-
+  return (
+    <div className="delete-drug-container">
+      <h1 style={{margin: '20px'}}>Delete Drug</h1>
+      <form className="delete-drug-form" onSubmit={handleDelete}>
+        <label htmlFor="batchId" style={{margin: '20px'}}>Enter Drug Batch ID to be Deleted</label>
+        <input
+          id="batchId"
+          type="text"
+          value={id}
+          onChange={handleInput}
+          placeholder="Enter Batch ID"
+          disabled={loading}
+        />
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" disabled={loading}>
+          {loading ? 'Deleting...' : 'Delete'}
+        </button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default DeleteDrug
+export default DeleteDrug;

@@ -453,6 +453,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DrugListDC from '../Drug-Service/DrugListDC'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PlaceOrder = () => {
   const [formData, setFormData] = useState({
@@ -559,8 +561,9 @@ const PlaceOrder = () => {
             );
 
             navigate('/success', {
-              state: { orderId: savedOrder.id, paymentId: response.razorpay_payment_id }
+              state: { orderId: savedOrder.id, paymentId: response.razorpay_payment_id, showToast: true }
             });
+
           } catch (err) {
             console.error(err);
             setStatusMessage('Order placement failed after payment.');
@@ -569,7 +572,7 @@ const PlaceOrder = () => {
         modal: {
           ondismiss: () => {
             setStatusMessage('Payment cancelled. No order created.');
-            alert('Payment cancelled — no order was created.');
+            toast.error('Payment cancelled — no order was created.');
           }
         },
         theme: { color: '#339900' }
@@ -577,14 +580,14 @@ const PlaceOrder = () => {
 
       setStatusMessage('Opening payment modal...');
       if (!window.Razorpay) {
-        alert('Payment SDK failed to load.');
+        toast.error('Payment SDK failed to load.');
         setLoading(false);
         return;
       }
       new window.Razorpay(options).open();
     } catch (err) {
       console.error(err);
-      alert('Error in payment flow. Please try again.');
+      toast.error('Error in payment flow. Please try again.');
     } finally {
       setLoading(false);
       setStatusMessage('');
@@ -593,7 +596,8 @@ const PlaceOrder = () => {
 
   return (
     <>
-      <h2 style={{ textAlign: 'center' }}>Place Order & Pay</h2>
+    <ToastContainer autoClose={2000} position='bottom-center' />
+      <h2 style={{ textAlign: 'center', margin: '20px', marginTop: '40px' }}>Place Order & Pay</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
         <label style={styles.label}>Batch ID</label>
         <input name="batch_id" type="text" value={formData.batch_id}
@@ -621,8 +625,8 @@ const PlaceOrder = () => {
         {statusMessage && <p>{statusMessage}</p>}
       </form>
 
-      <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Drugs List</h2>
-       <DrugListDC />
+      {/* <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Drugs List</h2>
+       <DrugListDC /> */}
     </>
   );
 };

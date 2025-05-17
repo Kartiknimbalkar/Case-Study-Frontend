@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Success = () => {
     const location = useLocation();
-    const { orderId, paymentId } = location.state || {};
+    const { orderId, paymentId, showToast } = location.state || {};
     const navigate = useNavigate();
 
     const navigateToDashboard = () => {
@@ -14,6 +16,12 @@ const Success = () => {
             navigate('/doctor-dashboard');
         }
     }
+
+    useEffect (() => {
+        if(showToast) {
+            toast.success("Order Placed Successfully");
+        }
+    }, []);
 
     return (
         <div id='success' style={{
@@ -37,6 +45,7 @@ const Success = () => {
             border: '3px solid #ccc',
             borderSpacing: '0'
             }}>
+            <ToastContainer autoClose={3000} position='bottom-center' />
             <h1 style={{color: 'green'}}>Payment Successful!</h1>
             <p>Order ID: {orderId}</p>
             <p>Payment ID: {paymentId}</p>

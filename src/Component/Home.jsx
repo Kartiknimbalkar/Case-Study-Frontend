@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Home.css'; // Import the CSS file
+import { FaUserPlus, FaSignInAlt, FaInfoCircle, FaEnvelope, FaShieldAlt, FaGavel, FaQuestionCircle } from 'react-icons/fa';
+import './Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -9,36 +10,41 @@ const Home = () => {
     <div className="home-container">
       {/* Header */}
       <header className="home-header">
-        <h2>Pharmacy Management System</h2>
+        <div className="logo">A Pharmacy Management Application</div>
+        <nav className="nav-links">
+          <Link to="/about"><FaInfoCircle />About</Link>
+          <Link to="/contact"><FaEnvelope />Contact</Link>
+          <Link to="/privacy"><FaShieldAlt />Privacy</Link>
+          <Link to="/terms"><FaGavel />Terms</Link>
+          <Link to="/help"><FaQuestionCircle />Help</Link>
+        </nav>
       </header>
 
-      {/* Main Content */}
-      <main className="home-main">
-        <h1>Welcome to Pharmacy Management System</h1>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-content">
+          <h2>Welcome to Your Trusted Pharmacy Partner</h2>
+          <p>Manage medicines, orders, and users with ease. Log in or sign up to experience the full power of our platform built for healthcare excellence.</p>
+          <div className="btn-group">
+            <button className="btn primary-btn" onClick={() => navigate('login')}>
+              <FaSignInAlt /> Login
+            </button>
+            <button className="btn secondary-btn" onClick={() => navigate('signup')}>
+              <FaUserPlus /> Sign Up
+            </button>
+          </div>
+        </div>
 
-        <h2>Login to continue</h2>
-        <button className="home-button" onClick={() => navigate('login')}>
-          Login
-        </button>
+        {/* Hero Illustration */}
+        <div className="hero-image">
+          <img src="/assets/image.png" alt="Pharmacy Illustration" />
 
-        <h2>Sign Up to continue</h2>
-        <button className="home-button" onClick={() => navigate('signup')}>
-          Sign Up
-        </button>
-      </main>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="home-footer">
         <p>&copy; {new Date().getFullYear()} Meraas Pharmacy. All rights reserved.</p>
-        <Link to="/about">About Us</Link>
-        <span>|</span>
-        <Link to="/contact">Contact Us</Link>
-        <span>|</span>
-        <Link to="/privacy">Privacy Policy</Link>
-        <span>|</span>
-        <Link to="/terms">Terms of Service</Link>
-        <span>|</span>
-        <Link to="/help">Help</Link>
       </footer>
     </div>
   );

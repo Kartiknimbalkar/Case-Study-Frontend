@@ -41,6 +41,11 @@ import SaleReport from './Component/Api-gateway-components/Sales-Service/SaleRep
 import UpdateDrug from './Component/Api-gateway-components/Drug-Service/UpdateDrug'
 import DrugListDC from './Component/Api-gateway-components/Drug-Service/DrugListDC'
 import OrderListDC from './Component/Api-gateway-components/Order-Service/OrderListDC'
+import VerifiedOrders from './Component/Api-gateway-components/Order-Service/VerifiedOrders'
+import Contact from './Component/Contact'
+import Terms from './Component/Terms'
+import Privacy from './Component/Privacy'
+import Help from './Component/Help'
 const App = () => {
   return (
     <>
@@ -50,15 +55,19 @@ const App = () => {
         <Route path='signup' element={<SignUp />}></Route>
         <Route path='login' element={<Login />} />
         <Route path='about' element={<About />} />
+        <Route path='contact' element={<Contact />} />
+        <Route path='terms' element={<Terms />} />
+        <Route path='privacy' element={<Privacy />} />
+        <Route path='help' element={<Help />} />
         <Route path='success' element={<Success />} />
         <Route path='payment-failed' element={<Failure />} />
         <Route path='admin-dashboard' element={<AdminDashboard />} />
 
         <Route path='doctor-dashboard' element={<DoctorDashboard />}>
-          <Route index element={<div>
+          {/* <Route index element={<div>
                   <h1>Doctor Dashboard</h1>
                   <h2 style={{textAlign: 'center'}}>Welcome to Pharmacy Management System</h2>
-                  </div>} />
+                  </div>} /> */}
           <Route path='drug-list-dc' element={<DrugListDC />} />
           <Route path='order-list-dc' element={<OrderListDC />} />
           <Route path='orderpay' element={<OrderAndPay />} />
@@ -91,6 +100,7 @@ const App = () => {
           <Route path='verify-order' element={<VerifyOrder />} />
           <Route path='pickup-order' element={<PickupOrder />} />
           <Route path='pickedup-orders' element={<PickedupOrders />} />
+          <Route path='verified-orders' element={<VerifiedOrders />} />
           <Route path='order-by-id' element={<OrderById />} />
         </Route>
 

@@ -1,0 +1,59 @@
+.delete-drug-container {
+  max-width: 350px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  color: #343a40;
+}
+
+.delete-drug-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.delete-drug-form input {
+  width: 100%;
+  padding: 10px 6px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.delete-drug-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.delete-drug-form button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-drug-form button:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.delete-drug-form button:hover:not(:disabled) {
+  background-color: #b02a37;
+}
+
+.error-message {
+  color: #e3342f;
+  font-weight: 600;
+  margin-bottom: 12px;
+}

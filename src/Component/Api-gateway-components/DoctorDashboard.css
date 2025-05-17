@@ -1,24 +1,72 @@
+/* DoctorDashboard.css */
 .dashboard-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to right, #a1b7ba, #b5a59e);
+  background-color: #f4f6f8; /* Light grey background */
   min-height: 100vh;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom right, #b1c6db, #d7baba);
+  transition: background 0.3s ease-in-out;
 }
 
-.header {
-  text-align: center;
-  margin-top: 50px;
-  animation: fadeIn 1s ease-in-out;
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.header h1 {
-  font-size: 2.5rem;
-  color: #2e7d32;
-  margin-bottom: 10px;
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 10px;
+  }
+
+  .dashboard-content .header h1 {
+    font-size: 1.8rem;
+  }
 }
 
-.header h2 {
-  font-size: 1.4rem;
-  color: #4CAF50;
-  font-weight: 500;
+
+
+.dashboard-content {
+  /* flex-grow: 1;
+  padding: 20px; */
+  /* You might want to add a background color or border to this content area */
+  flex-grow: 1;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* If you want a header within the dashboard content area */
+.dashboard-content .header {
+  text-align: left; /* Align header to the left within the content */
+  margin-bottom: 30px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.dashboard-content .header h1 {
+  font-size: 2.2rem;
+  color: #1976d2; /* A primary blue */
+  margin-bottom: 8px;
+}
+
+.dashboard-content .header h2 {
+  font-size: 1.3rem;
+  color: #424242;
+  font-weight: 400;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

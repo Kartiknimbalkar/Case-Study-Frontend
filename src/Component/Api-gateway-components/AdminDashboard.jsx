@@ -1,20 +1,26 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-    const navigate = useNavigate();
-  return (
-    <div style={{textAlign: 'center', marginTop: '20px'}}>
-        <h1>Welcome to Pharmacy Management System</h1>
-        <h2>Admin Dashboard</h2><br/><br/>
-        <button onClick={() => navigate('/drug-inventory')}>Drug Inventory</button><br/><br/>
-        <button onClick={() => navigate('/supplier-inventory')}>Supplier Inventory</button><br/><br/>
-        <button onClick={() => navigate('/order-inventory')}>Order Service</button><br/><br/>
-        <button onClick={() => navigate('/sales-report')}>Sales Report</button><br/><br/>
-        <button onClick={() => navigate('/logout')}>Logout</button><br/><br/>
+  const navigate = useNavigate();
 
+  return (
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1>Pharmacy Management System</h1>
+        <h2>Admin Dashboard</h2>
+      </div>
+      
+      <div className="dashboard-grid">
+        <div className="dashboard-card" onClick={() => navigate('/drug-inventory')}>Drug Inventory</div>
+        <div className="dashboard-card" onClick={() => navigate('/supplier-inventory')}>Supplier Inventory</div>
+        <div className="dashboard-card" onClick={() => navigate('/order-inventory')}>Order Service</div>
+        <div className="dashboard-card" onClick={() => navigate('/sales-report')}>Sales Report</div>
+        <div className="dashboard-card logout" onClick={() => navigate('/logout')}>Logout</div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default AdminDashboard;

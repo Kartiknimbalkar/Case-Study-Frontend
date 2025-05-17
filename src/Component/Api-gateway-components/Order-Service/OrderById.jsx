@@ -31,32 +31,82 @@ const OrderById = () => {
     }
 
   return (
-    <div style={{ marginTop: '20px', marginBottom: '20px', marginLeft: '100px', marginRight: '100px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <h1 style={{ color: 'brown' }}>Get Order By ID</h1>
-      <label htmlFor="orderId">Enter Order ID:</label><br/>
-      <input type="number" onChange={(e) => setOrderId(e.target.value)} id="orderId" name="orderId" placeholder='Enter Order ID' /><br/><br/>
-      <button onClick={handleSubmit}>Get Order</button><br/><br/>
-        {hasSearched && order ? (
-            <div>
-            <h2>Order Details:</h2>
-            <p><strong>Order ID:</strong> {order.id}</p>
+  <div style={{
+    maxWidth: '600px',
+    margin: '40px auto',
+    padding: '20px',
+    borderRadius: '12px',
+    backgroundColor: '#f9f9f9',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+}}>
+    <h1 style={{ color: '#6a1b9a', textAlign: 'center', marginBottom: '20px' }}>Get Order By ID</h1>
+    
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <label htmlFor="orderId" style={{ fontWeight: 'bold' }}>Enter Order ID:</label>
+        <input
+            type="number"
+            id="orderId"
+            value={orderId}
+            onChange={(e) => setOrderId(e.target.value)}
+            placeholder="e.g., 101"
+            style={{
+                padding: '10px',
+                border: '1px solid #ccc',
+                borderRadius: '8px',
+                fontSize: '16px'
+            }}
+            required
+        />
+        <button
+            type="submit"
+            style={{
+                padding: '10px',
+                backgroundColor: '#6a1b9a',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                transition: 'background-color 0.3s'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#4a148c'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#6a1b9a'}
+        >
+            Get Order
+        </button>
+    </form>
+
+    <br />
+
+    {hasSearched && order ? (
+        <div style={{
+            border: '1px solid #e0e0e0',
+            borderRadius: '10px',
+            padding: '20px',
+            backgroundColor: 'white',
+            marginTop: '20px'
+        }}>
+            <h3 style={{ color: '#2e7d32', marginBottom: '10px' }}>Order Details</h3>
+            <p><strong>Order ID:</strong> #{order.id}</p>
             <p><strong>Drug Name:</strong> {order.drugNames}</p>
-            <p><strong>Drug Price:</strong> {order.drugPrices}</p>
+            <p><strong>Drug Price:</strong> ₹{order.drugPrices}</p>
             <p><strong>Batch ID:</strong> {order.batch_id}</p>
             <p><strong>Quantity:</strong> {order.quantity}</p>
-            <p><strong>Doctor Name:</strong> {order.doctorName}</p>
-            <p><strong>Doctor Contact:</strong> {order.doctorContact}</p>
-            <p><strong>Doctor Email:</strong> {order.doctorEmail}</p>
-            <p><strong>Total Amount:</strong> {order.totalPrice}</p>
-            <p><strong>Paid Amount:</strong> {order.paidAmount}</p>
+            <p><strong>Doctor Name:</strong> {order.doctorName} ({order.username})</p>
+            <p><strong>Contact:</strong> {order.doctorContact}</p>
+            <p><strong>Email:</strong> {order.doctorEmail}</p>
+            <p><strong>Total:</strong> ₹{order.totalPrice}</p>
             <p><strong>Status:</strong> {order.status}</p>
             <p><strong>Order Date:</strong> {new Date(order.orderDate).toLocaleString()}</p>
             <p><strong>Pickup Date:</strong> {new Date(order.pickupDate).toLocaleString()}</p>
-            </div>
-        ) : hasSearched && !order ? (
-            <div>No order found with the given ID.</div>
-        ) : null}
-    </div>
+        </div>
+    ) : hasSearched && !order ? (
+        <div style={{ marginTop: '20px', color: 'red', textAlign: 'center' }}>
+            No order found with the given ID.
+        </div>
+    ) : null}
+</div>
+
   )
 }
 

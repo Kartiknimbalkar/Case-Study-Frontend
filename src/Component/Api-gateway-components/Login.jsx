@@ -81,7 +81,7 @@ const styles = {
     height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'color-gradient(135deg , #00a8ff, #9c88ff)',
+background: 'linear-gradient(to bottom right, #74ebd5, #acb6e5)',
   },
   form: {
     background: '#fff',

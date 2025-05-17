@@ -1,52 +1,73 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SaleReport = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const downloadPdf = async () => {
+    setError('');
+    setLoading(true);
     const token = localStorage.getItem("token");
-    if(!token) {
-      console.error("No token found");
+    if (!token) {
+      setError("No authentication token found. Redirecting to login...");
+      setLoading(false);
       navigate("/login");
       return;
     }
     try {
-      const respone = await axios.get("http://localhost:9090/sales-service/sales/report/download", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: 'blob', // Important for handling binary data
+      const response = await axios.get("http://localhost:9090/sales-service/sales/report/download", {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'blob',
       });
-      const blob = new Blob([respone.data], { type: 'application/pdf' });
+
+      const blob = new Blob([response.data], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'report.pdf'); // Specify the file name
+      link.setAttribute('download', 'sales_report.pdf');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      window.URL.revokeObjectURL(url); // Clean up the URL object
-    }
-    catch (error) {
-      console.error("Error downloading PDF:", error);
-      if (error.response && error.response.status === 401) {
-        console.error("Unauthorized access - redirecting to login");
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setError("Session expired. Redirecting to login...");
         navigate("/login");
       } else {
-        console.error("An error occurred while downloading the report");
+        setError("Failed to download the report. Please try again later.");
+        console.error("Download error:", error);
       }
-  }
-}
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div style={{ marginTop: '20px', marginBottom: '20px', marginLeft: '100px', marginRight: '100px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ margin: '20px 100px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h1 style={{ color: 'brown' }}>Sales Report</h1>
       <p>Click the button below to download the sales report.</p>
-      <button onClick={downloadPdf}>Download Report</button>
+      <button
+        onClick={downloadPdf}
+        disabled={loading}
+        aria-busy={loading}
+        style={{
+          padding: '10px 20px',
+          backgroundColor: loading ? '#aaa' : '#8B4513',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: loading ? 'not-allowed' : 'pointer',
+          transition: 'background-color 0.3s ease',
+        }}
+      >
+        {loading ? 'Downloading...' : 'Download Report'}
+      </button>
+      {error && <p role="alert" style={{ color: 'red', marginTop: 10 }}>{error}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default SaleReport
+export default SaleReport;

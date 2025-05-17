@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PickedupOrders = () => {
+const VerifiedOrders = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPickedupOrders = async () => {
+    const fetchVerifiedOrders = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
         navigate('/');
@@ -18,28 +18,26 @@ const PickedupOrders = () => {
 
       try {
         const response = await axios.get(
-          'http://localhost:9090/order-service/orders/pickedUpOrders',
+          'http://localhost:9090/order-service/orders/verifiedOrders',
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
         setData(response.data);
       } catch (err) {
-        console.error('Error fetching picked up orders:', err);
-        setError('Failed to fetch picked-up orders. Please try again later.');
+        console.error('Error fetching verified orders:', err);
+        setError('Failed to fetch verified orders. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPickedupOrders();
+    fetchVerifiedOrders();
   }, [navigate]);
 
   return (
     <div>
-      <h1 style={{ margin: '20px', marginBottom: '40px' }}>Pickedup Orders</h1>
+      <h1 style={{ margin: '20px', marginBottom: '40px' }}>Verified Orders</h1>
 
       {loading ? (
         <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>Loading...</p>
@@ -80,38 +78,25 @@ const PickedupOrders = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map(
-                (
-                  {
-                    id,
-                    doctorName,
-                    doctorContact,
-                    doctorEmail,
-                    batch_id,
-                    drugNames,
-                    quantity,
-                    totalPrice,
-                    paidAmount,
-                    orderDate,
-                    pickupDate,
-                  },
-                  index
-                ) => (
-                  <tr key={index}>
-                    <td>{id}</td>
-                    <td>{doctorName}</td>
-                    <td>{doctorContact}</td>
-                    <td>{doctorEmail}</td>
-                    <td>{batch_id}</td>
-                    <td>{drugNames}</td>
-                    <td>{quantity}</td>
-                    <td>₹ {totalPrice}</td>
-                    <td>₹ {paidAmount}</td>
-                    <td>{orderDate ? new Date(orderDate).toLocaleString() : '—'}</td>
-                    <td>{pickupDate ? new Date(pickupDate).toLocaleString() : '—'}</td>
-                  </tr>
-                )
-              )}
+              {data.map((order, index) => (
+                <tr key={index}>
+                  <td>{order.id}</td>
+                  <td>{order.doctorName}</td>
+                  <td>{order.doctorContact}</td>
+                  <td>{order.doctorEmail}</td>
+                  <td>{order.batch_id}</td>
+                  <td>{order.drugNames}</td>
+                  <td>{order.quantity}</td>
+                  <td>₹ {order.totalPrice}</td>
+                  <td>₹ {order.paidAmount}</td>
+                  <td>
+                    {order.orderDate ? new Date(order.orderDate).toLocaleString() : '—'}
+                  </td>
+                  <td>
+                    {order.pickupDate ? new Date(order.pickupDate).toLocaleString() : '—'}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -120,4 +105,4 @@ const PickedupOrders = () => {
   );
 };
 
-export default PickedupOrders;
+export default VerifiedOrders;

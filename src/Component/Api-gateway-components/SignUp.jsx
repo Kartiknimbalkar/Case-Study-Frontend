@@ -31,72 +31,85 @@ const SignUp = () => {
 
   // CSS Object
   const styles = {
-    container: {
-      maxWidth: '400px',
-      margin: '50px auto',
-      padding: '30px',
-      border: '1px solid #ccc',
-      borderRadius: '8px',
-      boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-      backgroundColor: '#f9f9f9',
-      fontFamily: 'Arial, sans-serif'
-    },
-    label: {
-      display: 'block',
-      marginBottom: '8px',
-      fontWeight: 'bold'
-    },
-    input: {
-      width: '100%',
-      padding: '10px',
-      marginBottom: '15px',
-      borderRadius: '4px',
-      border: '1px solid #ccc'
-    },
-    button: {
-      width: '100%',
-      padding: '10px',
-      marginBottom: '10px',
-      backgroundColor: '#007bff',
-      color: '#fff',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer'
-    },
-    resetButton: {
-      ...this?.button,
-      backgroundColor: '#6c757d'
-    },
-    loginButton: {
-      ...this?.button,
-      backgroundColor: '#28a745'
-    }
-  };
+  outerContainer: {
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'linear-gradient(135deg, #d0f0ec, #c2e9fb)', // Soft green to blue
+    fontFamily: 'Segoe UI, sans-serif',
+  },
+  container: {
+    width: '100%',
+    maxWidth: '420px',
+    padding: '40px 30px',
+    backgroundColor: '#ffffff',
+    borderRadius: '12px',
+    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
+  },
+  label: {
+    display: 'block',
+    marginBottom: '8px',
+    fontWeight: '600',
+    color: '#333',
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    marginBottom: '20px',
+    borderRadius: '6px',
+    border: '1px solid #ccc',
+    fontSize: '15px',
+  },
+  button: {
+    width: '100%',
+    padding: '12px',
+    marginBottom: '12px',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#fff',
+  },
+  primaryButton: {
+    backgroundColor: '#007bff',
+  },
+  resetButton: {
+    backgroundColor: '#6c757d',
+  },
+  loginButton: {
+    backgroundColor: '#28a745',
+  },
+};
+
 
   return (
+  <div style={styles.outerContainer}>
     <div style={styles.container}>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username" style={styles.label}>Username:</label>
         <input type='text' onChange={handleInput} id='username' name='username' required style={styles.input} />
-        
+
         <label htmlFor="password" style={styles.label}>Password:</label>
         <input type='password' onChange={handleInput} id='password' name='password' required style={styles.input} />
-        
+
         <label htmlFor="role" style={styles.label}>Role:</label>
         <select id='role' onChange={handleInput} name='role' required style={styles.input}>
           <option value="">-- Select Role --</option>
           <option value="ADMIN">ADMIN</option>
           <option value="DOCTOR">DOCTOR</option>
         </select>
-        
-        <button type='submit' style={styles.button}>Sign Up</button>
-        <button type='reset' style={styles.resetButton}>Reset</button>
-        <button type='button' onClick={() => navigate('/login')} style={styles.loginButton}>
+
+        <button type='submit' style={{ ...styles.button, ...styles.primaryButton }}>Sign Up</button>
+        <button type='reset' style={{ ...styles.button, ...styles.resetButton }}>Reset</button>
+        <button type='button' onClick={() => navigate('/login')} style={{ ...styles.button, ...styles.loginButton }}>
           Already have an account? Login
         </button>
       </form>
     </div>
-  );
+  </div>
+);
 };
 
 export default SignUp;

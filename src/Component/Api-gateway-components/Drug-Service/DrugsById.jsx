@@ -2,97 +2,150 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
-const DrugsById = ({refresh}) => {
-  const [searchId, setSearchId] = useState('');
-  const [data, setData] = useState(null);
+const DrugsById = () => {
   const [id, setId] = useState('');
-  const navigate = useNavigate();
+  const [searchId, setSearchId] = useState('');
+  const [drug, setDrug] = useState(null);
+  const [error, setError] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     setId(e.target.value);
-  }
+  };
 
   const handleSearch = () => {
     setSearchId(id);
     setHasSearched(true);
+    setError('');
+    setDrug(null);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') handleSearch();
   };
 
   useEffect(() => {
-    const fetchDrugs = async () => {
+    const fetchDrugById = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
-        console.warn("No token—redirecting to login")
-        navigate("/login")
-        return
-      }
-      if(!searchId) {
-        console.warn("No ID provided—redirecting in the input to login")
-        // navigate("/login")
+        alert("Session expired. Please login again.");
+        navigate("/login");
         return;
       }
+
+      if (!searchId) return;
+
       try {
-        const response = await axios.get(
-          `http://localhost:9090/drug-service/drugs/get/${searchId}`, {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-        setData(response.data);
-        console.log("Data fetched successfully:", response.data);
+        const response = await axios.get(`http://localhost:9090/drug-service/drugs/get/${searchId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setDrug(response.data);
+      } catch (err) {
+        if (err.response?.status === 404) {
+          setError("Drug not found.");
+        } else {
+          setError("Failed to fetch drug data.");
         }
-    catch (error) {
-        console.error("Error fetching drugs:", error);
-        setData(null);
       }
+    };
+
+    fetchDrugById();
+  }, [searchId]);
+
+  const handleReset = () => {
+    setId('');
+    setSearchId('');
+    setDrug(null);
+    setError('');
+    setHasSearched(false);
   };
-  
-  fetchDrugs()
-}, [searchId, refresh]);
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '20px',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
-      <h1>Find Drugs By ID</h1>
-      {/* <label>Enter Drug Batch ID</label><br/> */}
-      <input style={{padding: '10px'}} type='text' value={id} onChange={handleChange} placeholder='Enter Batch ID'></input>
-      <button style={{marginTop: '10px', padding: '10px', cursor: 'pointer'}} onClick={handleSearch}>Search</button>
-     {
-      hasSearched ? ( data ? (
-        <div style={{marginBottom: '12px', textAlign: 'left'}}>
-          <h2>Drug Details</h2>
-          <p><strong>BATCH ID: </strong> {data.batchId} </p>
-          <p><strong>Drug Name: </strong> {data.name} </p>
-          <p><strong>Manufacturer: </strong> {data.manufacturer} </p>
-          <p><strong>Price: </strong> {data.price} </p>
-          <p><strong>Quantity: </strong> {data.quantity} </p>
-          <p><strong>Expiry Date: </strong> {data.expiryDate} </p>
-        </div>
-      ) : 
-      (
-        <div>
-          <h2>No Data Found</h2>
-          <p>Please check the ID and try again.</p>
-        </div>
-      )
-     ) : (
-        <div>
-          <h2>Search for a Drug</h2>
-          <p>Enter a batch ID to find drug details.</p>
-        </div>
-      )
-     }
-     {
-      data && (
-        <button onClick={() => setData(null)}>Clear</button>
-     )
-      }
-    </div>
-  )
-}
+    <div style={styles.container}>
+      <h1 style={styles.heading}>Find Drug by Batch ID</h1>
 
-export default DrugsById
+      <input
+        type="text"
+        value={id}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder="Enter Batch ID"
+        style={styles.input}
+      />
+      <div>
+        <button onClick={handleSearch} style={styles.button}>Search</button>
+        <button onClick={handleReset} style={{ ...styles.button, backgroundColor: '#888' }}>Reset</button>
+      </div>
+
+      {error && <p style={styles.error}>{error}</p>}
+
+      {hasSearched && !error && drug && (
+        <div style={styles.card}>
+          <h2 style={{ marginBottom: '10px' }}>Drug Details</h2>
+          <p><strong>Batch ID:</strong> {drug.batchId}</p>
+          <p><strong>Name:</strong> {drug.name}</p>
+          <p><strong>Manufacturer:</strong> {drug.manufacturer}</p>
+          <p><strong>Price:</strong> ₹{drug.price}</p>
+          <p><strong>Quantity:</strong> {drug.quantity}</p>
+          <p><strong>Expiry Date:</strong> {new Date(drug.expiryDate).toLocaleDateString()}</p>
+        </div>
+      )}
+
+      {hasSearched && !error && !drug && (
+        <p style={styles.info}>No data found for the entered Batch ID.</p>
+      )}
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    marginTop: '50px',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif',
+  },
+  heading: {
+    marginBottom: '20px',
+    color: '#333'
+  },
+  input: {
+    padding: '10px',
+    width: '250px',
+    fontSize: '16px',
+    marginBottom: '10px',
+    borderRadius: '6px',
+    border: '1px solid #ccc'
+  },
+  button: {
+    padding: '10px 16px',
+    margin: '10px',
+    fontSize: '14px',
+    cursor: 'pointer',
+    border: 'none',
+    borderRadius: '6px',
+    backgroundColor: '#007bff',
+    color: 'white'
+  },
+  card: {
+    marginTop: '20px',
+    padding: '20px',
+    width: '350px',
+    margin: '20px auto',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '8px',
+    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+    textAlign: 'left'
+  },
+  error: {
+    color: 'red',
+    fontWeight: 'bold',
+    marginTop: '15px'
+  },
+  info: {
+    color: '#555',
+    marginTop: '15px'
+  }
+};
+
+export default DrugsById;

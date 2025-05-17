@@ -5,6 +5,14 @@ html, body, #root {
   overflow: auto;
 }
 
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dff9fb, #c7ecee); /* Soft blue gradient */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 
 body {
   font-family: 'Arial', sans-serif;
