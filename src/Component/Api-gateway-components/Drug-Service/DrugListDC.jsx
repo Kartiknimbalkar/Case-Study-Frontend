@@ -30,8 +30,10 @@ const DrugListDC = ({ refresh }) => {
   }, [refresh]);
 
   const filteredDrugs = data.filter((drug) =>
-    drug.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  [drug.name, drug.manufacturer, drug.batchId].some(field =>
+    field.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+);
 
   return (
     <div

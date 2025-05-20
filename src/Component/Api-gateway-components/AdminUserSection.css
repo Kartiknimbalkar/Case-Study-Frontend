@@ -1,0 +1,38 @@
+.admin-user-section {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  /* No background, no font styles - keep it clean */
+}
+
+.admin-user-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  background-color: #7e99a2;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.tabs button:hover {
+  background-color: #9fccc5;
+}
+
+.view-content {
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}

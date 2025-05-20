@@ -10,6 +10,7 @@ const SaleHistory = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setSales([]);
     e.preventDefault();
     setError('');
     if (!date) {

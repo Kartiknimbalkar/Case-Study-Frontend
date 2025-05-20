@@ -8,7 +8,10 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    role: ''
+    role: '',
+    name: '',
+    email: '',
+    contact: ''
   });
 
   const handleInput = e => {
@@ -43,6 +46,7 @@ const SignUp = () => {
     width: '100%',
     maxWidth: '420px',
     padding: '40px 30px',
+    margin: '40px',
     backgroundColor: '#ffffff',
     borderRadius: '12px',
     boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
@@ -100,6 +104,15 @@ const SignUp = () => {
           <option value="ADMIN">ADMIN</option>
           <option value="DOCTOR">DOCTOR</option>
         </select>
+
+        <label htmlFor="name" style={styles.label}>Name:</label>
+        <input type='text' onChange={handleInput} id='name' name='name' required style={styles.input} />
+
+        <label htmlFor="email" style={styles.label}>Email:</label>
+        <input type='text' onChange={handleInput} id='email' name='email' required style={styles.input} />
+
+        <label htmlFor="contact" style={styles.label}>Contact:</label>
+        <input type='text' onChange={handleInput} id='contact' name='contact' required style={styles.input} />
 
         <button type='submit' style={{ ...styles.button, ...styles.primaryButton }}>Sign Up</button>
         <button type='reset' style={{ ...styles.button, ...styles.resetButton }}>Reset</button>

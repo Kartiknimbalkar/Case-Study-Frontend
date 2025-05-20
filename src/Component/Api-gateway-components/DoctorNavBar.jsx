@@ -1,18 +1,30 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './DoctorNavbar.css';
 
 const DoctorNavBar = () => {
   return (
-    <div>
-      <nav className='navbar'>
-        <Link to="/doctor-dashboard/drug-list-dc" style={{textDecoration: 'none', color: 'skyblue', margin: '0 10px'}}>List Drugs</Link>
-        <Link to="/doctor-dashboard/orderpay" style={{textDecoration: 'none', color: 'skyblue', margin: '0 10px'}}>Place Order</Link>
-        <Link to="/doctor-dashboard/order-list-dc" style={{textDecoration: 'none', color: 'skyblue', margin: '0 10px'}}>List Orders</Link>
-        <Link to="/doctor-dashboard/drug-id" style={{textDecoration: 'none', color: 'skyblue', margin: '0 10px'}}>Get Drug by Id</Link>
-        <Link to="/logout" style={{textDecoration: 'none', color: 'skyblue', margin: '0 10px'}}>Logout</Link>
-      </nav>
-    </div>
-  )
-}
+    <nav className="doctor-navbar">
+      <NavLink to="/doctor-dashboard/drug-list-dc" className="nav-link">
+        List Drugs
+      </NavLink>
+      <NavLink to="/doctor-dashboard/orderpay" className="nav-link">
+        Place Order
+      </NavLink>
+      <NavLink to="/doctor-dashboard/order-list-dc" className="nav-link">
+        List Orders
+      </NavLink>
+      <NavLink to="/doctor-dashboard/drug-id" className="nav-link">
+        Get Drug by Id
+      </NavLink>
+      <NavLink to="/doctor-dashboard/user-profile" className="nav-link">
+        User Profile
+      </NavLink>
+      <NavLink to="/logout" className="nav-link logout-link">
+        Logout
+      </NavLink>
+    </nav>
+  );
+};
 
-export default DoctorNavBar
+export default DoctorNavBar;

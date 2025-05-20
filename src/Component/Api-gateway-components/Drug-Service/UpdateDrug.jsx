@@ -1,128 +1,160 @@
-import axios from 'axios';
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const UpdateDrug = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
-    const [data, setData] = React.useState({
-        name: "",
-        batchId: "",
-        manufacturer: "",
-        price: 0,
-        expiryDate: null
-    });
+  const [data, setData] = useState({
+    batchId: "",
+    name: "",
+    manufacturer: "",
+    price: "",
+    expiryDate: null,
+  });
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    const fetchDrug = async () => {
+      try {
+        const response = await axios.get(`http://localhost:9090/drug-service/drugs/get/${id}`, {
+          headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+        });
+        const fetchedData = response.data;
+        setData({
+          ...fetchedData,
+          expiryDate: fetchedData.expiryDate?.substring(0, 10) || null,
+        });
+      } catch (error) {
+        toast.error("Failed to fetch drug data");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    const handleInput = (e) => {
-        const { name, value } = e.target;
-        setData((d) => ({ ...d, [name]: value }));
+    fetchDrug();
+  }, [id]);
+
+  const handleChange = (e) => {
+    setData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    try {
+      await axios.put(`http://localhost:9090/drug-service/drugs/update/${id}`, data, {
+        headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+      });
+      toast.success("Drug updated successfully");
+      setTimeout(() => {
+        navigate("/drug-inventory/drugs");
+      }, 2000);
+    } catch (error) {
+      toast.error(`Update failed: ${error.response?.data?.message || "Server Error"}`);
+    } finally {
+      setSubmitting(false);
     }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem("token");
-        if (!token) {
-            console.warn("No token—redirecting to login")
-            navigate("/login")
-            return;
-        }
-        try {
-            const response = await axios.put(`http://localhost:9090/drug-service/drugs/update/${data.batchId}`, data, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            console.log(response.data);
-            toast.success(`Drug Updated Successfully`);
-            // navigate("/drug-inventory/drugs");
-        }
-        catch (error) {
-            console.error("Error updating drug:", error);
-        }
-    }
+  if (loading) return <div style={styles.loader}>Loading drug data...</div>;
 
   return (
     <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <h1 style={styles.title}>Update Drug</h1>
-        <ToastContainer position='top-right' autoClose={2000} />
+      <ToastContainer autoClose={2000} position="bottom-center" />
+      <h2>Update Drug</h2>
 
-        <label style={styles.label} htmlFor="name">Drug Name</label>
-        <input type="text" id="name" name="name" onChange={handleInput} placeholder="Enter Drug Name" required />
+      <form onSubmit={handleSubmit}>
+        <div style={styles.field}>
+          <label>Batch ID:</label>
+          <input style={styles.input} value={data.batchId} name="batchId" readOnly />
+        </div>
 
-        <label style={styles.label} htmlFor="batchId">Batch ID</label>
-        <input type="text" id="batchId" name="batchId" onChange={handleInput} placeholder="Enter Batch ID" required />
+        <div style={styles.field}>
+          <label>Name:</label>
+          <input style={styles.input} value={data.name} name="name" onChange={handleChange} />
+        </div>
 
-        <label style={styles.label} htmlFor="manufacturer">Manufacturer</label>
-        <input type="text" id="manufacturer" name="manufacturer" onChange={handleInput} placeholder="Enter Manufacturer" required />
+        <div style={styles.field}>
+          <label>Manufacturer:</label>
+          <input style={styles.input} value={data.manufacturer} name="manufacturer" onChange={handleChange} />
+        </div>
 
-        <label style={styles.label} htmlFor="price">Price</label>
-        <input type="number" id="price" name="price" onChange={handleInput} placeholder="Enter Price" required />
+        <div style={styles.field}>
+          <label>Price:</label>
+          <input style={styles.input} type="number" value={data.price} name="price" onChange={handleChange} />
+        </div>
 
-        <label style={styles.label} htmlFor='expiryDate'>Expiry Date</label>
-        <input type="date" id="expiryDate" name="expiryDate" onChange={handleInput} placeholder="Enter Expiry Date" required />
+        <div style={styles.field}>
+          <label>Expiry Date:</label>
+          <input style={styles.input} type="date" value={data.expiryDate} name="expiryDate" onChange={handleChange} />
+        </div>
 
-        <button style={styles.button} type="submit">Update Drug</button>
+        <div style={styles.buttons}>
+          <button type="submit" style={styles.button} disabled={submitting}>
+            {submitting ? "Updating..." : "Update"}
+          </button>
+
+          <button type="button" onClick={() => navigate(-1)} style={styles.backButton}>
+            ← Back
+          </button>
+        </div>
       </form>
     </div>
-  )
-}
-
-const styles = {
-  container: {
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '-60px',
-    // background: 'linear-gradient(135deg, #e0eafc, #cfdef3)',
-  },
-  form: {
-    background: '#fff',
-    padding: '32px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-    width: '350px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '14px',
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '10px',
-    color: '#273c75',
-  },
-  label: {
-    fontWeight: 'bold',
-    color: '#353b48',
-  },
-  input: {
-    padding: '10px',
-    border: '1px solid #dcdde1',
-    borderRadius: '5px',
-    fontSize: '15px',
-  },
-  button: {
-    marginTop: '10px',
-    background: '#00a8ff',
-    color: '#fff',
-    border: 'none',
-    padding: '12px',
-    borderRadius: '5px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'background 0.2s',
-  },
-  error: {
-    color: '#e84118',
-    background: '#fbeee6',
-    padding: '8px',
-    borderRadius: '5px',
-    textAlign: 'center',
-    fontSize: '14px',
-  },
+  );
 };
 
-export default UpdateDrug
+export default UpdateDrug;
+
+// ==================== Inline Styles ====================
+const styles = {
+  container: {
+    padding: "2rem",
+    maxWidth: "500px",
+    margin: "0 auto",
+    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+    borderRadius: "10px",
+    backgroundColor: "#f9f9f9",
+  },
+  field: {
+    marginBottom: "1rem",
+  },
+  input: {
+    width: "100%",
+    padding: "0.5rem",
+    fontSize: "1rem",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+  },
+  button: {
+    padding: "0.6rem 1.2rem",
+    fontSize: "1rem",
+    backgroundColor: "#28a745",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "1rem",
+  },
+  backButton: {
+    padding: "0.6rem 1.2rem",
+    fontSize: "1rem",
+    backgroundColor: "#6c757d",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
+  loader: {
+    textAlign: "center",
+    marginTop: "3rem",
+    fontSize: "1.2rem",
+  },
+};

@@ -17,6 +17,13 @@ const AdminDashboard = () => {
         <div className="dashboard-card" onClick={() => navigate('/supplier-inventory')}>Supplier Inventory</div>
         <div className="dashboard-card" onClick={() => navigate('/order-inventory')}>Order Service</div>
         <div className="dashboard-card" onClick={() => navigate('/sales-report')}>Sales Report</div>
+        {/* <div className="dashboard-card" onClick={() => navigate('/user-profile')}>User Profile</div> */}
+
+        <div style={{backgroundColor: 'greenyellow'}} className="dashboard-card" onClick={() => navigate('/admin-user-section')}>
+  User Management
+</div>
+
+
         <div className="dashboard-card logout" onClick={() => navigate('/logout')}>Logout</div>
       </div>
     </div>

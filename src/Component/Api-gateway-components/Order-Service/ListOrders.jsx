@@ -89,10 +89,14 @@ const OrderList = () => {
           {data.map((order, index) => {
             const isEven = index % 2 === 0;
             return(
-              <tr key={index} style={{ background: isEven ? '#f7fbff' : '#fff', transition: 'background 0.2s', cursor: 'pointer' }}
-                onMouseOver={e => (e.currentTarget.style.background = '#f1f7ff')}
-                onMouseOut={e => (e.currentTarget.style.background = isEven ? '#f7fbff' : '#fff')}
-              >
+              <tr
+  key={index}
+  style={{ background: isEven ? '#f7fbff' : '#fff', transition: 'background 0.2s', cursor: 'pointer' }}
+  onMouseOver={e => (e.currentTarget.style.background = '#f1f7ff')}
+  onMouseOut={e => (e.currentTarget.style.background = isEven ? '#f7fbff' : '#fff')}
+  onClick={() => navigate(`/orders/get/${order.id}`)} // 👈 navigate to details
+>
+
                 <td>{order.id}</td>
                 <td>{order.doctorName}</td>
                 <td>{order.doctorContact}</td>
@@ -121,7 +125,11 @@ const OrderList = () => {
                     }}
                     onMouseOver={e => (e.currentTarget.style.background = '#007bb5')}
                     onMouseOut={e => (e.currentTarget.style.background = '#00a8ff')}
-                    onClick={() => verifyOrder(order.id)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // prevents row click
+                      verifyOrder(order.id);
+                    }}
+
                   >
                     Verify
                   </button>
@@ -141,12 +149,17 @@ const OrderList = () => {
                     }}
                     onMouseOver={e => (e.currentTarget.style.background = '#1e7e34')}
                     onMouseOut={e => (e.currentTarget.style.background = '#28a745')}
-                    onClick={() => pickupOrder(order.id)}
+                    onClick={(e) => {
+                      e.stopPropagation(); // prevents row click
+                      pickupOrder(order.id);
+                    }}
+
                   >
                     Pickup
                   </button>
                 </td>
               </tr>
+              
             );
           })}
         </tbody>

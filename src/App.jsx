@@ -46,6 +46,10 @@ import Contact from './Component/Contact'
 import Terms from './Component/Terms'
 import Privacy from './Component/Privacy'
 import Help from './Component/Help'
+import OrderDetails from './Component/Api-gateway-components/Order-Service/OrderDetails'
+import UserProfile from './Component/Api-gateway-components/UserProfile'
+import UserByName from './Component/Api-gateway-components/UserByName'
+import AdminUserSection from './Component/Api-gateway-components/AdminUserSection'
 const App = () => {
   return (
     <>
@@ -62,6 +66,10 @@ const App = () => {
         <Route path='success' element={<Success />} />
         <Route path='payment-failed' element={<Failure />} />
         <Route path='admin-dashboard' element={<AdminDashboard />} />
+        <Route path='user-profile' element={<UserProfile />} />
+        <Route path='user-by-name' element={<UserByName />} />
+
+        <Route path="/admin-user-section" element={<AdminUserSection />} />
 
         <Route path='doctor-dashboard' element={<DoctorDashboard />}>
           {/* <Route index element={<div>
@@ -69,6 +77,8 @@ const App = () => {
                   <h2 style={{textAlign: 'center'}}>Welcome to Pharmacy Management System</h2>
                   </div>} /> */}
           <Route path='drug-list-dc' element={<DrugListDC />} />
+          <Route path='user-profile' element={<UserProfile />} />
+
           <Route path='order-list-dc' element={<OrderListDC />} />
           <Route path='orderpay' element={<OrderAndPay />} />
           <Route path='drug-id' element={<DrugsById />} />
@@ -80,7 +90,7 @@ const App = () => {
           <Route path='drug-id' element={<DrugsById />} />
           <Route path='drug-delete' element={<DeleteDrug />} />
           <Route path='drug-add' element={<AddDrug />} />
-          <Route path='drugs/drug-update' element={<UpdateDrug />} />
+          {/* <Route path='drugs/drug-update' element={<UpdateDrug />} /> */}
         </Route>
 
         <Route path='supplier-inventory' element={<SupplierBar />}>
@@ -88,10 +98,12 @@ const App = () => {
           <Route path='suppliers' element={<SuppliersList />} />
           <Route path='add-supplier' element={<AddSupplier />} />
           <Route path='restock-drugs' element={<RestockDrugs />} />
-          <Route path='update-suppliers' element={<UpdateSupplier />} />
           <Route path='delete-supplier' element={<DeleteSupplier />} />
           <Route path='history-supplier' element={<RestockHistory />} />
         </Route>
+        <Route path='/supplier-service/suppliers/update/:id' element={<UpdateSupplier />} />
+        <Route path='/drug-service/drugs/update/:id' element={<UpdateDrug />} />
+
 
         <Route path='order-inventory' element={<OrderBar />}>
           <Route index element={<ListOrders />} />
@@ -103,6 +115,7 @@ const App = () => {
           <Route path='verified-orders' element={<VerifiedOrders />} />
           <Route path='order-by-id' element={<OrderById />} />
         </Route>
+        <Route path='/orders/get/:id' element={<OrderDetails />} />
 
         <Route path='sales-report' element={<SalesBar />}>
           <Route index element={<SalesList />} />

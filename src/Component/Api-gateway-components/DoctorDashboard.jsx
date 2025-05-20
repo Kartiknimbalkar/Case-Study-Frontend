@@ -9,7 +9,7 @@ const DoctorDashboard = () => {
       <DoctorNavBar />
       <div className="dashboard-content">
         <div className="header">
-          <h1>Doctor Dashboard</h1>
+          <h1 >Doctor Dashboard</h1>
           <h2 style={{textAlign: 'center'}}>Welcome to your workspace</h2>
         </div>
         <Outlet />

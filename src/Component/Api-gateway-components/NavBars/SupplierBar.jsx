@@ -16,8 +16,8 @@ const SupplierBar = () => {
         <Link to="/supplier-inventory/suppliers">Suppliers</Link>
         <Link to="/supplier-inventory/add-supplier">Add Supplier</Link>
         <Link to="/supplier-inventory/restock-drugs">Restock Drugs</Link>
-        <Link to="/supplier-inventory/update-suppliers">Update Supplier</Link>
-        <Link to="/supplier-inventory/delete-supplier">Delete Supplier</Link>
+        {/* <Link to="/supplier-inventory/update-suppliers">Update Supplier</Link> */}
+        {/* <Link to="/supplier-inventory/delete-supplier">Delete Supplier</Link> */}
         <Link to="/supplier-inventory/history-supplier">Restock History</Link>
       </nav>
 

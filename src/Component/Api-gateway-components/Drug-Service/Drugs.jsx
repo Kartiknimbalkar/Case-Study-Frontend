@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Drugs = () => {
   const [data, setData] = useState([]);
@@ -43,20 +44,23 @@ const Drugs = () => {
       await axios.delete(`http://localhost:9090/drug-service/drugs/delete/${batchId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert("Drug deleted successfully.");
+      toast.success("Drug deleted successfully.");
       fetchDrugs(); // Refresh the list
     } catch (error) {
       console.error("Error deleting drug:", error);
-      alert("Failed to delete the drug.");
+      toast.error("Failed to delete the drug.");
     }
   };
 
   const filteredDrugs = data.filter((drug) =>
-    drug.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  [drug.name, drug.manufacturer, drug.batchId].some(field =>
+    field.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+);
 
   return (
     <div style={{ padding: '30px' }}>
+      <ToastContainer autoClose={2000} position='bottom-center' />
       <h2 style={{ fontFamily: 'Arial', fontWeight: 'bold' }}>Drug Inventory</h2>
       <div style={{ marginBottom: '20px' }}>
         <input
@@ -107,7 +111,7 @@ const Drugs = () => {
                 borderRadius: '4px',
                 padding: '8px 16px',
                 marginRight: '10px'
-              }} onClick={() => navigate(`drug-update`)}>
+              }} onClick={() => navigate(`/drug-service/drugs/update/${drug.batchId}`)}>
                 Edit
               </button>
               <button style={{
